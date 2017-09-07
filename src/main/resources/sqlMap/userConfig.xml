@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "test">
+<select id="addUser" parameterType="com.ouc.ssm.bean.User">
+insert into User(id,username,password)values(#{id},#{username},#{password});
+</select>
+<delete id="deleteUser" parameterType="int">
+delete from User Where id = #{id}
+</delete>
+<select id="selectAll" resultType="com.ouc.ssm.bean.User">
+select * from User
+</select>
+</mapper>

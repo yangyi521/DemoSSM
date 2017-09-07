@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:util="http://www.springframework.org/schema/util" 
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+    xmlns:cache="http://www.springframework.org/schema/cache"  
+     xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/jdbc  
+    http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd  
+    http://www.springframework.org/schema/cache  
+    http://www.springframework.org/schema/cache/spring-cache-3.1.xsd  
+    http://www.springframework.org/schema/aop  
+    http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/util  
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"> 
+    <!--注解的处理器映射器，注意：注解的适配器映射器必须配对使用  -->
+      <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <!--注解的适配器  -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+    <!--使用mvc：annotation-driven代替上面注解映射器和适配器的配置，mvc的注解的驱动还默认加载了很多的默认的参数的绑定方法，比如json转化解析器摸默认加载了，
+    实际开发用此方法！
+     -->
+     <!--对于注解的Handler可以单个配置 ，实际开发中使用组件扫描-->
+     <context:component-scan base-package="com.ouc.ssm.controller"></context:component-scan>
+    <!--  <mvc:annotation-driven></mvc:annotation-driven> 可以代替 处理器映射器跟适配器
+     -->
+     
+    <!--fenjiexian--> 
+ 
+     <!--视图解析器 ，解析jsp视图，默认使用jstl标签，classpath下面有jstl的包-->
+     <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     <property name="prefix" value="/"/><!--前缀 -->
+     <property name="suffix" value=".jsp"/><!--后缀 -->
+     </bean>
+      <bean name ="user" class = "com.ouc.ssm.bean.User"/>
+     <bean name="addUserImpl" id = "addUserImpl" class = "com.ouc.ssm.daoImp.AddUserImpl"/>
+     <bean name="addController" id = "addController" class = "com.ouc.ssm.controller.AddController">
+     <property name="addUserImpl" ref="addUserImpl"></property>
+     <property name="user" ref = "user"></property>
+     </bean>
+     <bean name="deleteUserImp" class = "com.ouc.ssm.daoImp.DeleteUserImp"/>
+     <bean name="deleteController" class = "com.ouc.ssm.controller.DeleteController">
+     <property name="deleteUserImp" ref="deleteUserImp"></property>
+     </bean>
+     </beans>
